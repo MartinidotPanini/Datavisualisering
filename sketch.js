@@ -1,9 +1,7 @@
-//Gustavs Branch
-
 function setup() {
-  createCanvas(400, 400);
+  loadJSON("https://openholidaysapi.org/Countries", printData);
 }
 
-function draw() {
-  background(220);
+function printData(data) {
+  console.log(data);
 }
