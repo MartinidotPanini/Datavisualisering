@@ -1,38 +1,77 @@
-let urlAPI = "https://holidayapi.com/v1/holidays?pretty&key=f56c3874-4a1c-401e-aeb9-0baee40626a6&country=DK&year=2024";
+let urlAPI =
+  "https://holidayapi.com/v1/holidays?pretty&key=f56c3874-4a1c-401e-aeb9-0baee40626a6&country=DK&year=2024"; //definere URL til en holiday API
 
-let adjustedDate = new Date("October 27, 2024 08:00:00"); 
+let todayDate;
+let skyderM;
+let skyderD;
+
 function setup() {
-  loadJSON(urlAPI, printData);
+  createCanvas(400, 400);
+  background(220);
+  //funktion kalder loadJSON() med URL + call-back til printData. data fra API'et bliver argument til funktion printData()
+  skyderM = createSelect();
+  skyderM.position(200, 100);
+  skyderM.option("Januar");
+  skyderM.option("Feburar");
+  skyderM.option("Marts");
+  skyderM.option("April");
+  skyderM.option("Maj");
+  skyderM.option("juni");
+  skyderM.option("Juli");
+  skyderM.option("august");
+  skyderM.option("september");
+  skyderM.option("oktober");
+  skyderM.option("november");
+  skyderM.option("December");
+
+  skyderD = createSelect();
+  skyderD.position(100, 100);
+
+  for (let i = 1; i <= 31; i++) {
+    skyderD.option([i]);
+  }
+
+  let btn = createButton("Resultat"); //knap til sten
+  btn.mousePressed(() => loadJSON(urlAPI, printData));
+  btn.position(260, 220);
 }
 
 function printData(holidaysData) {
-  let holidays = holidaysData.holidays;
-  
-  let today = adjustedDate 
-  console.log("Today's Date:", today);
+  todayDate = new Date(2024 + skyderM.value() + skyderD.value());
+  console.log(todayDate);
+  fill("black");
+  textSize(12);
+  text(todayDate,10,200);
+  let holidays = holidaysData.holidays; //listen af Holidays
 
-  let nextHoliday = null;
+  let nextHoliday = null; //sættet til null
 
+  //laver forløkke som går gennem alle holidays. holidayDato er Date-objekt. hvis holiday er efter todayDate, bliver den nextHoliday og løkkes break.
   for (let i = 0; i < holidays.length; i++) {
-    let holidayDate = new Date(holidays[i].date);
-    if (holidayDate > today) { 
+    let holidayDato = new Date(holidays[i].date);
+    if (holidayDato > todayDate) {
       nextHoliday = holidays[i];
       break;
     }
   }
 
   if (nextHoliday) {
-    console.log("Next Holiday:", nextHoliday.name, "on", nextHoliday.date);
+    //tjekker om nextHoliday ikke = null, hvis fremtidig Holiday(fra løkke) forsætter kode.
+    console.log("Næste Holiday:" + nextHoliday.name + "på", nextHoliday.date);
+    fill("black");
+  textSize(12);
+  text("Næste Holiday:" + nextHoliday.name + "på" + nextHoliday.date,10,100);
 
-  
-    let holidayDate = new Date(nextHoliday.date);
-    let holidayTimestamp = holidayDate;
-    console.log("Holiday Timestamp:", holidayTimestamp);
+    let holidayDato = new Date(nextHoliday.date);
+    let holidayTimestamp = holidayDato;
+    console.log("Holiday Tid:", holidayTimestamp);
 
-    let daysUntilHoliday = Math.floor((holidayTimestamp - today) / (1000 * 60 * 60 * 24));
-    console.log("Days Until Next Holiday:", daysUntilHoliday);
+    let daysUntilHoliday = Math.floor(
+      (holidayTimestamp - todayDate) / (1000 * 60 * 60 * 24)
+    ); //finder antal dage til næste Holiday
+    console.log("Dage Indtil næst Holiday:", daysUntilHoliday);
   } else {
-    console.log("No Future Holidays Found.");
+    console.log("Ingen fremtidige Holiday.");
   }
 }
 
