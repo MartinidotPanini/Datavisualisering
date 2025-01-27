@@ -34,6 +34,11 @@ function setup() {
   let btn = createButton("Resultat"); //knap til sten
   btn.mousePressed(() => loadJSON(urlAPI, printData));
   btn.position(260, 220);
+  
+  
+  let btn1 = createButton("Restart"); //knap til restart
+  btn1.mousePressed(() => restart());
+  btn1.position(160, 220);
 }
 
 function printData(holidaysData) {
@@ -73,5 +78,9 @@ function printData(holidaysData) {
   } else {
     console.log("Ingen fremtidige Holiday.");
   }
+}
+
+function restart(){
+  background(220);
 }
 
