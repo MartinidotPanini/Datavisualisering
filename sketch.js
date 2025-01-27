@@ -16,12 +16,12 @@ function setup() {
   skyderM.option("Marts");
   skyderM.option("April");
   skyderM.option("Maj");
-  skyderM.option("juni");
+  skyderM.option("Juni");
   skyderM.option("Juli");
-  skyderM.option("august");
-  skyderM.option("september");
-  skyderM.option("oktober");
-  skyderM.option("november");
+  skyderM.option("August");
+  skyderM.option("September");
+  skyderM.option("Oktober");
+  skyderM.option("November");
   skyderM.option("December");
 
   skyderD = createSelect();
@@ -65,7 +65,7 @@ function printData(holidaysData) {
     console.log("Næste Holiday:" + nextHoliday.name + "på", nextHoliday.date);
     fill("black");
   textSize(12);
-  text("Næste Holiday:" + nextHoliday.name + "på" + nextHoliday.date,10,100);
+  text("Næste Holiday: " + nextHoliday.name + " på " + nextHoliday.date,10,50);
 
     let holidayDato = new Date(nextHoliday.date);
     let holidayTimestamp = holidayDato;
